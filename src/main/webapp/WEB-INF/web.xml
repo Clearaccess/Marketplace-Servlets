@@ -4,12 +4,12 @@
 
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
-  <welcome-file-list>
-    <welcome-file>login</welcome-file>
-  </welcome-file-list>
   <servlet-mapping>
     <servlet-name>default</servlet-name>
     <url-pattern>*.css</url-pattern>
     <url-pattern>*.js</url-pattern>
+    <url-pattern>*.woff2</url-pattern>
+    <url-pattern>*.woff</url-pattern>
+    <url-pattern>*.ttf</url-pattern>
   </servlet-mapping>
 </web-app>

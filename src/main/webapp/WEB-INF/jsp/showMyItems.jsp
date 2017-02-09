@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 
 <head>
@@ -9,23 +10,7 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-default navbar-fixed-top">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="#">Online marketplace</a>
-            </div>
-
-            <div class="collapse navbar-collapse">
-                <form class="navbar-form navbar-right">
-                    <p class="navbar-text">You are logged in as: </p>
-                    <p class="navbar-text" id="userName"> Alexander </p>
-                    <div class="form-group">
-                        <button type="button" class="btn btn-primary navbar-btn">Sign out</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </nav>
+    <%@ include file="toolbar.jsp" %>
 
     <div class="container-fluid">
 
@@ -53,7 +38,8 @@
         <div class="row">
             <div class="col-sm-12" id="pane">
                 <ul class="nav nav-tabs">
-                    <li role="presentation" class="active panes"><a href="#">Show All Items</a></li>
+                    <li role="presentation" class="panes"><a href="showItems">Show All Items</a></li>
+                    <li role="presentation" class="active panes"><a href="showMyItems">Show My Items</a></li>
                 </ul>
             </div>
         </div>

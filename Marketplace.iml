@@ -10,17 +10,11 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="ojdbc7" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: junit:junit:3.8.1" level="project" />
+    <orderEntry type="library" name="Maven: javax.servlet:jstl:1.2" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: javax:javaee-api:7.0" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: com.sun.mail:javax.mail:1.5.0" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: javax.activation:activation:1.1" level="project" />
-    <orderEntry type="library" name="Maven: javax.servlet:jstl:1.2" level="project" />
-    <orderEntry type="library" name="Maven: com.oracle.jdbc:ojdbc7:12.1.0.2" level="project" />
-    <orderEntry type="library" name="Maven: com.oracle.jdbc:xdb6:12.1.0.2" level="project" />
-    <orderEntry type="library" name="Maven: com.oracle.jdbc:orai18n:12.1.0.2" level="project" />
-    <orderEntry type="library" name="Maven: com.oracle.jdbc:xmlparserv2:12.1.0.2" level="project" />
-    <orderEntry type="library" name="Maven: com.oracle.jdbc:oraclepki:12.1.0.2" level="project" />
-    <orderEntry type="library" name="Maven: com.oracle.jdbc:osdt_cert:12.1.0.2" level="project" />
-    <orderEntry type="library" name="Maven: com.oracle.jdbc:osdt_core:12.1.0.2" level="project" />
   </component>
 </module>

@@ -9,25 +9,7 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-default navbar-fixed-top">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="#">Online marketplace</a>
-            </div>
-
-            <div class="collapse navbar-collapse">
-                <form class="navbar-form navbar-right">
-                    <p class="navbar-text">You are logged in as: </p>
-                    <% if(session.getAttribute("user")!=null){
-                    <p class="navbar-text" id="userName"> <% session.getAttribute("user"). %></p>
-                    %>
-                    <div class="form-group">
-                        <button type="button" class="btn btn-primary navbar-btn">Sign out</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </nav>
+    <%@ include file="toolbar.jsp" %>
 
     <div class="container">
         <form class="form-horizontal" id="form">
