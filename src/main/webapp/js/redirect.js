@@ -10,13 +10,13 @@ $('#bLoginEnterGuest').click(
     }
 )
 
-
 $('#bLoginReg').click(
     function () {
         location.href = "registration";
     }
 )
 
+/*
 $('#bReg').click(
     function () {
         if ($('#form').valid()) {
@@ -30,9 +30,13 @@ $('#bReset').click(
         $('#form')[0].reset();
     }
 )
+*/
 
+/*
 $('#reset').click(
     function () {
         $('#form')[0].reset();
     }
 )
+
+*/

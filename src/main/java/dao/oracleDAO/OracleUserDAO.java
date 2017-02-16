@@ -11,9 +11,11 @@ import java.util.ArrayList;
  */
 public class OracleUserDAO implements UserDAO {
 
-    public void insert(User user) throws SQLException {
+    public long insert(User user){
         Connection conn = null;
         PreparedStatement ps = null;
+        Statement st=null;
+        long idNewUser=0;
 
         try {
             conn = OracleDAOFactory.createConnection();
@@ -24,13 +26,26 @@ public class OracleUserDAO implements UserDAO {
             ps.setString(3, user.getLogin());
             ps.setString(4, user.getPassword());
             ps.executeUpdate();
+            idNewUser=getIdOfNewUser(conn);
+        } catch (SQLException e) {
+            e.printStackTrace();
         } finally {
-            ps.close();
-            conn.close();
+            try {
+                if(ps!=null) {
+                    ps.close();
+                }
+                if(conn!=null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
+
+        return idNewUser;
     }
 
-    public void update(User user) throws SQLException {
+    public void update(User user){
         Connection conn = null;
         PreparedStatement ps = null;
 
@@ -44,13 +59,23 @@ public class OracleUserDAO implements UserDAO {
             ps.setString(4, user.getPassword());
             ps.setLong(5, user.getUserId());
             ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         } finally {
-                ps.close();
-                conn.close();
+            try {
+                if(ps!=null) {
+                    ps.close();
+                }
+                if(conn!=null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 
-    public void delete(User user) throws SQLException {
+    public void delete(User user){
 
         Connection conn = null;
         PreparedStatement ps = null;
@@ -61,17 +86,28 @@ public class OracleUserDAO implements UserDAO {
             ps = conn.prepareStatement(sql);
             ps.setLong(1, user.getUserId());
             ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         } finally {
-                ps.close();
-                conn.close();
+            try {
+                if(ps!=null) {
+                    ps.close();
+                }
+                if(conn!=null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 
-    public User getById(long id) throws SQLException {
+    public User getById(long id){
 
         Connection conn=null;
         PreparedStatement ps=null;
         ResultSet rs=null;
+        User user=null;
 
         try{
             conn= OracleDAOFactory.createConnection();
@@ -79,30 +115,42 @@ public class OracleUserDAO implements UserDAO {
             ps=conn.prepareStatement(sql);
             ps.setLong(1,id);
             rs=ps.executeQuery();
-            rs.next();
 
-            User user=new User();
-
-            user.setUserId(rs.getLong("user_Id"));
-            user.setFullName(rs.getString("full_Name"));
-            user.setBillingAddress(rs.getString("billing_Address"));
-            user.setLogin(rs.getString("login"));
-            user.setPassword(rs.getString("password"));
-
-            return user;
-
+            user=new User();
+            if(rs.next()){
+                user.setUserId(rs.getLong("user_Id"));
+                user.setFullName(rs.getString("full_Name"));
+                user.setBillingAddress(rs.getString("billing_Address"));
+                user.setLogin(rs.getString("login"));
+                user.setPassword(rs.getString("password"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         } finally {
-                rs.close();
-                ps.close();
-                conn.close();
+            try {
+                if(rs!=null) {
+                    rs.close();
+                }
+                if(ps!=null) {
+                    ps.close();
+                }
+                if(conn!=null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
+
+        return user;
     }
 
-    public User getByLogin(String login) throws SQLException {
+    public User getByLogin(String login) {
 
         Connection conn=null;
         PreparedStatement ps=null;
         ResultSet rs=null;
+        User user=null;
 
         try{
             conn= OracleDAOFactory.createConnection();
@@ -110,26 +158,39 @@ public class OracleUserDAO implements UserDAO {
             ps=conn.prepareStatement(sql);
             ps.setString(1,login);
             rs=ps.executeQuery();
-            rs.next();
 
-            User user=new User();
+            if(rs.next()) {
+                user=new User();
+                user.setUserId(rs.getLong("user_Id"));
+                user.setFullName(rs.getString("full_Name"));
+                user.setBillingAddress(rs.getString("billing_Address"));
+                user.setLogin(rs.getString("login"));
+                user.setPassword(rs.getString("password"));
+            }
 
-            user.setUserId(rs.getLong("user_Id"));
-            user.setFullName(rs.getString("full_Name"));
-            user.setBillingAddress(rs.getString("billing_Address"));
-            user.setLogin(rs.getString("login"));
-            user.setPassword(rs.getString("password"));
-
-            return user;
-
+        } catch (SQLException e) {
+            e.printStackTrace();
         } finally {
-            rs.close();
-            ps.close();
-            conn.close();
+
+            try {
+                if(rs!=null) {
+                    rs.close();
+                }
+                if(ps!=null) {
+                    ps.close();
+                }
+                if(conn!=null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
+
+        return user;
     }
 
-    public ArrayList<User> getAll() throws SQLException {
+    public ArrayList<User> getAll(){
 
         ArrayList<User>listUsers=new ArrayList<User>();
         Connection conn=null;
@@ -152,12 +213,33 @@ public class OracleUserDAO implements UserDAO {
                 listUsers.add(user);
             }
 
-            return listUsers;
-
+        } catch (SQLException e) {
+            e.printStackTrace();
         } finally {
-                rs.close();
-                st.close();
-                conn.close();
+            try {
+                if(rs!=null) {
+                    rs.close();
+                }
+                if(st!=null) {
+                    st.close();
+                }
+                if(conn!=null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
+
+        return listUsers;
+    }
+
+    private long getIdOfNewUser(Connection conn) throws SQLException {
+        String sql="SELECT user_seq.currval FROM dual";
+        PreparedStatement ps=conn.prepareStatement(sql);
+        ResultSet rs=ps.executeQuery();
+        rs.next();
+        long user_id=rs.getLong(1);
+        return user_id;
     }
 }

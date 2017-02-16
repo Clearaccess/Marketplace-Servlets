@@ -1,2 +1,2 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
-<jsp:forward page="/welcome" />
+<jsp:forward page="/showItems"/>

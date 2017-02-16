@@ -10,10 +10,10 @@ import java.util.ArrayList;
  */
 public interface UserDAO {
 
-    void insert(User user) throws SQLException;
-    void update(User user) throws SQLException;
-    void delete(User user) throws SQLException;
-    User getById(long id) throws SQLException;
-    User getByLogin(String login) throws SQLException;
-    ArrayList<User> getAll() throws SQLException;
+    long insert(User user);
+    void update(User user);
+    void delete(User user);
+    User getById(long id);
+    User getByLogin(String login);
+    ArrayList<User> getAll();
 }

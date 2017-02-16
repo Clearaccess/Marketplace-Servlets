@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <%@ include file="toolbar.jsp" %>
+    <jsp:directive.include file="toolbar.jsp"/>
 
     <div class="container-fluid">
 

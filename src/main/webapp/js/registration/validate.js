@@ -1,3 +1,7 @@
+jQuery.validator.addMethod("notEqual", function(value, element, params) {
+  return this.optional(element) || value != $(params).val();
+}, "Please enter value a different about Full Name");
+
 $('#form').validate({
   rules: {
     fullName: {
@@ -7,8 +11,8 @@ $('#form').validate({
     required: true
     },
     login: {
-    email: true,
-    required: true
+    required: true,
+    notEqual: '#fullName'
     },
     password: {
         minlength: 6,

@@ -1,9 +1,10 @@
 SPOOL .\init.log
 
 @@createTables.sql
-@@createIncUsers.sql
-@@createIncBids.sql
-@@createIncItems.sql
+@@createSeq.sql
+@@createProcUsers.sql
+@@createProcBids.sql
+@@createProcItems.sql
 @@fillData.sql
 
 SPOOL OFF

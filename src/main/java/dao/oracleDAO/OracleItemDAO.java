@@ -10,10 +10,10 @@ import java.util.ArrayList;
  * Created by Aleksandr_Vaniukov on 1/17/2017.
  */
 public class OracleItemDAO implements ItemDAO {
-    public void insert(Item item) throws SQLException {
+    public long insert(Item item){
         Connection conn = null;
         PreparedStatement ps = null;
-
+        long itemId=0;
         try {
             conn = OracleDAOFactory.createConnection();
             String sql = "INSERT INTO Items(seller_Id, title, description, start_Price, time_Left, start_Bidding_Date, buy_It_Now, bid_Increment) VALUES(?,?,?,?,?,?,?,?)";
@@ -27,13 +27,26 @@ public class OracleItemDAO implements ItemDAO {
             ps.setBoolean(7, item.isBuyItNow());
             ps.setDouble(8, item.getBidIncrement());
             ps.executeUpdate();
+            itemId= getIdOfNewItem(conn);
+        } catch (SQLException e) {
+            e.printStackTrace();
         } finally {
-                ps.close();
-                conn.close();
+            try {
+                if(ps!=null) {
+                    ps.close();
+                }
+                if(conn!=null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
+
+        return itemId;
     }
 
-    public void update(Item item) throws SQLException {
+    public void update(Item item){
         Connection conn = null;
         PreparedStatement ps = null;
 
@@ -51,13 +64,23 @@ public class OracleItemDAO implements ItemDAO {
             ps.setDouble(8, item.getBidIncrement());
             ps.setLong(9, item.getItemId());
             ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         } finally {
-                ps.close();
-                conn.close();
+            try {
+                if(ps!=null) {
+                    ps.close();
+                }
+                if(conn!=null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 
-    public void delete(Item item) throws SQLException {
+    public void delete(Item item){
         Connection conn = null;
         PreparedStatement ps = null;
 
@@ -67,17 +90,28 @@ public class OracleItemDAO implements ItemDAO {
             ps = conn.prepareStatement(sql);
             ps.setLong(1, item.getItemId());
             ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         } finally {
-                ps.close();
-                conn.close();
+            try {
+                if(ps!=null) {
+                    ps.close();
+                }
+                if(conn!=null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 
-    public Item getById(long id) throws SQLException {
+    public Item getById(long id){
 
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs=null;
+        Item item=null;
 
         try {
             conn = OracleDAOFactory.createConnection();
@@ -85,30 +119,41 @@ public class OracleItemDAO implements ItemDAO {
             ps = conn.prepareStatement(sql);
             ps.setLong(1, id);
             rs=ps.executeQuery();
-            rs.next();
 
-            Item item=new Item();
-
-            item.setItemId(rs.getLong("item_Id"));
-            item.setSellerId(rs.getLong("seller_Id"));
-            item.setTitle(rs.getString("title"));
-            item.setDescription(rs.getString("description"));
-            item.setTimeLeft(rs.getLong("time_Left"));
-            item.setStartPrice(rs.getDouble("start_Price"));
-            item.setStartBiddingDate(rs.getDate("start_Bidding_Date"));
-            item.setBuyItNow(rs.getBoolean("buy_It_Now"));
-            item.setBidIncrement(rs.getDouble("bid_Increment"));
-
-            return item;
-
+            item=new Item();
+            if(rs.next()) {
+                item.setItemId(rs.getLong("item_Id"));
+                item.setSellerId(rs.getLong("seller_Id"));
+                item.setTitle(rs.getString("title"));
+                item.setDescription(rs.getString("description"));
+                item.setTimeLeft(rs.getLong("time_Left"));
+                item.setStartPrice(rs.getDouble("start_Price"));
+                item.setStartBiddingDate(rs.getDate("start_Bidding_Date"));
+                item.setBuyItNow(rs.getBoolean("buy_It_Now"));
+                item.setBidIncrement(rs.getDouble("bid_Increment"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         } finally {
-                rs.close();
-                ps.close();
-                conn.close();
+            try {
+                if(rs!=null) {
+                    rs.close();
+                }
+                if(ps!=null) {
+                    ps.close();
+                }
+                if(conn!=null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
+
+        return item;
     }
 
-    public ArrayList<Item> getItemsBySubstr(String substr) throws SQLException {
+    public ArrayList<Item> getItemsBySubstr(String substr){
 
         ArrayList<Item>listItems=new ArrayList<Item>();
         Connection conn = null;
@@ -139,16 +184,28 @@ public class OracleItemDAO implements ItemDAO {
                 listItems.add(item);
             }
 
-            return listItems;
-
+        } catch (SQLException e) {
+            e.printStackTrace();
         } finally {
-                rs.close();
-                ps.close();
-                conn.close();
+            try {
+                if(rs!=null) {
+                    rs.close();
+                }
+                if(ps!=null) {
+                    ps.close();
+                }
+                if(conn!=null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
+
+        return listItems;
     }
 
-    public ArrayList<Item> getItemsBySellerId(long id) throws SQLException {
+    public ArrayList<Item> getItemsBySellerId(long id){
 
         ArrayList<Item>listItemsOfSeller=new ArrayList<Item>();
         Connection conn = null;
@@ -179,16 +236,28 @@ public class OracleItemDAO implements ItemDAO {
                 listItemsOfSeller.add(item);
             }
 
-            return listItemsOfSeller;
-
+        } catch (SQLException e) {
+            e.printStackTrace();
         } finally {
-                rs.close();
-                ps.close();
-                conn.close();
+            try {
+                if(rs!=null) {
+                    rs.close();
+                }
+                if(ps!=null) {
+                    ps.close();
+                }
+                if(conn!=null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
+
+        return listItemsOfSeller;
     }
 
-    public ArrayList<Item> getAll() throws SQLException {
+    public ArrayList<Item> getAll(){
 
         ArrayList<Item> listItems=new ArrayList<Item>();
         Connection conn = null;
@@ -218,12 +287,33 @@ public class OracleItemDAO implements ItemDAO {
                 listItems.add(item);
             }
 
-            return listItems;
-
+        } catch (SQLException e) {
+            e.printStackTrace();
         } finally {
-                rs.close();
-                st.close();
-                conn.close();
+            try {
+                if(rs!=null) {
+                    rs.close();
+                }
+                if(st!=null) {
+                    st.close();
+                }
+                if(conn!=null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
+
+        return listItems;
+    }
+
+    private long getIdOfNewItem(Connection conn) throws SQLException {
+        String sql="SELECT item_seq.currval FROM dual";
+        PreparedStatement ps=conn.prepareStatement(sql);
+        ResultSet rs=ps.executeQuery();
+        rs.next();
+        long item_id=rs.getLong(1);
+        return item_id;
     }
 }
