@@ -44,12 +44,14 @@ public class MainController {
         ArrayList<ViewItem> viewItems=new ArrayList<ViewItem>();
         ArrayList<Item> items=itemDAO.getAll();
 
-        for(Item item: items){
-            User seller=userDAO.getById(item.getSellerId());
-            Bid bestBid=bidDAO.getBestBidByItemId(item.getItemId());
-            User bidder=userDAO.getById(bestBid.getBidderId());
-            ViewItem temp=new ViewItem(item,seller, bidder,bestBid);
-            viewItems.add(temp);
+        for(Item item: items) {
+            User seller = userDAO.getById(item.getSellerId());
+            Bid bestBid = bidDAO.getBestBidByItemId(item.getItemId());
+            User bidder = userDAO.getById(bestBid.getBidderId());
+            ViewItem temp = new ViewItem(item, seller, bidder, bestBid);
+            if(!isSellItem(temp)) {
+                viewItems.add(temp);
+            }
         }
 
         return viewItems;
@@ -168,5 +170,9 @@ public class MainController {
         newItem.setStartBiddingDate(new Date(System.currentTimeMillis()));
 
         return newItem;
+    }
+
+    private boolean isSellItem(ViewItem item){
+        return item.isBuyItNow() && item.getFullNameBidder()!=null;
     }
 }
