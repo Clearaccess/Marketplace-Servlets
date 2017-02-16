@@ -76,7 +76,7 @@ public class DispatcherServlet extends HttpServlet {
         if(requestURL.equals("/logout")){
 
             session.removeAttribute("user");
-            req.getRequestDispatcher("WEB-INF/jsp/login.jsp").forward(req, resp);
+            resp.sendRedirect("/login");
 
         } else if(requestURL.equals("/register")){
 
@@ -86,7 +86,7 @@ public class DispatcherServlet extends HttpServlet {
             } else {
                 User user=mainController.register(req,resp);
                 session.setAttribute("user",user);
-                req.getRequestDispatcher("WEB-INF/jsp/login.jsp").forward(req, resp);
+                resp.sendRedirect("/login");
             }
 
         } else if(requestURL.equals("/edit")){
@@ -99,24 +99,16 @@ public class DispatcherServlet extends HttpServlet {
                 mainController.updateItem(req,session);
             }
 
-            ArrayList<ViewItem>items=mainController.getViewItems();
-            req.setAttribute("items", items);
-            req.getRequestDispatcher("WEB-INF/jsp/showItems.jsp").forward(req, resp);
+            resp.sendRedirect("/showItems");
         } else if(requestURL.equals("/makeBid")){
 
             mainController.makeBid(req,session);
-
-            ArrayList<ViewItem>items=mainController.getViewItems();
-            req.setAttribute("items", items);
-            req.getRequestDispatcher("WEB-INF/jsp/showItems.jsp").forward(req, resp);
+            resp.sendRedirect("/showItems");
 
         } else if(requestURL.equals("/buyItem")){
 
             mainController.buyItem(req,session);
-
-            ArrayList<ViewItem>items=mainController.getViewItems();
-            req.setAttribute("items", items);
-            req.getRequestDispatcher("WEB-INF/jsp/showItems.jsp").forward(req, resp);
+            resp.sendRedirect("/showItems");
         }
     }
 }

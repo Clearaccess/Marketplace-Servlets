@@ -37,9 +37,7 @@ public class AccessFilter implements Filter {
             if(isAuthorize(request)){
                 String login=request.getParameter("login");
                 session.setAttribute("user", mainController.getUserByLogin(login));
-                ArrayList<ViewItem> items=mainController.getViewItems();
-                request.setAttribute("items", items);
-                request.getRequestDispatcher("WEB-INF/jsp/showItems.jsp").forward(servletRequest, servletResponse);
+                response.sendRedirect("/showItems");
             } else {
                 request.setAttribute("error","No exist such login or password");
                 request.getRequestDispatcher("WEB-INF/jsp/login.jsp").forward(servletRequest,servletResponse);
@@ -47,7 +45,7 @@ public class AccessFilter implements Filter {
         } else {
             //Attempt access to pages when no authorize user
             if(session.getAttribute("user")==null && (requestURL.equals("/editItem") || requestURL.equals("/showMyItems"))){
-                request.getRequestDispatcher("WEB-INF/jsp/login.jsp").forward(servletRequest, servletResponse);
+                response.sendRedirect("/login");
             } else {
                 filterChain.doFilter(servletRequest,servletResponse);
             }
@@ -62,6 +60,6 @@ public class AccessFilter implements Filter {
         String login=request.getParameter("login").toLowerCase();
         String password=request.getParameter("password").toLowerCase();
 
-        return mainController.isRegister(login,password);
+        return mainController.isLogin(request) && mainController.isRegister(login,password);
     }
 }
