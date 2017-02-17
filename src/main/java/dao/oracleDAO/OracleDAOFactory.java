@@ -5,6 +5,10 @@ import dao.DAOFactory;
 import dao.ItemDAO;
 import dao.UserDAO;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -14,7 +18,7 @@ import java.sql.SQLException;
  */
 public class OracleDAOFactory extends DAOFactory {
 
-    private static final String DB_DRIVER="oracle.jdbc.OracleDriver";
+    /*private static final String DB_DRIVER="oracle.jdbc.OracleDriver";
     private static final String DB_URL="jdbc:oracle:thin:@localhost:1521/xe";
     private static final String DB_USER="ALEXANDER";
     private static final String DB_PASSWORD="440276";
@@ -25,10 +29,18 @@ public class OracleDAOFactory extends DAOFactory {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
-    public static Connection createConnection() throws SQLException {
-        Connection conn = DriverManager.getConnection(DB_URL,DB_USER,DB_PASSWORD);
+    private static DataSource dataSource;
+
+    public synchronized static Connection createConnection() throws SQLException, NamingException {
+        if(dataSource==null) {
+            Context initContext = new InitialContext();
+            Context envContext = (Context) initContext.lookup("java:/comp/env");
+            dataSource = (DataSource) envContext.lookup("jdbc/myoracle");
+        }
+
+        Connection conn = dataSource.getConnection();
         return conn;
     }
 

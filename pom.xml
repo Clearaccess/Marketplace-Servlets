@@ -59,6 +59,7 @@
         <configuration>
           <port>8888</port>
           <path>/</path>
+          <contextFile>${basedir}/src/main/resources/maven-tomcat-plugin/context.xml</contextFile>
         </configuration>
       </plugin>
 

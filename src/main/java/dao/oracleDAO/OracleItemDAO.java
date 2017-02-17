@@ -3,6 +3,7 @@ package dao.oracleDAO;
 import dao.ItemDAO;
 import to.Item;
 
+import javax.naming.NamingException;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -29,6 +30,8 @@ public class OracleItemDAO implements ItemDAO {
             ps.executeUpdate();
             itemId= getIdOfNewItem(conn);
         } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (NamingException e) {
             e.printStackTrace();
         } finally {
             try {
@@ -66,6 +69,8 @@ public class OracleItemDAO implements ItemDAO {
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (NamingException e) {
+            e.printStackTrace();
         } finally {
             try {
                 if(ps!=null) {
@@ -91,6 +96,8 @@ public class OracleItemDAO implements ItemDAO {
             ps.setLong(1, item.getItemId());
             ps.executeUpdate();
         } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (NamingException e) {
             e.printStackTrace();
         } finally {
             try {
@@ -133,6 +140,8 @@ public class OracleItemDAO implements ItemDAO {
                 item.setBidIncrement(rs.getDouble("bid_Increment"));
             }
         } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (NamingException e) {
             e.printStackTrace();
         } finally {
             try {
@@ -189,6 +198,8 @@ public class OracleItemDAO implements ItemDAO {
 
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (NamingException e) {
+            e.printStackTrace();
         } finally {
             try {
                 if(rs!=null) {
@@ -241,6 +252,8 @@ public class OracleItemDAO implements ItemDAO {
 
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (NamingException e) {
+            e.printStackTrace();
         } finally {
             try {
                 if(rs!=null) {
@@ -291,6 +304,8 @@ public class OracleItemDAO implements ItemDAO {
             }
 
         } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (NamingException e) {
             e.printStackTrace();
         } finally {
             try {

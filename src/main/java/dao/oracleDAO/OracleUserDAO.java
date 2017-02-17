@@ -3,6 +3,7 @@ package dao.oracleDAO;
 import dao.UserDAO;
 import to.User;
 
+import javax.naming.NamingException;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -28,6 +29,8 @@ public class OracleUserDAO implements UserDAO {
             ps.executeUpdate();
             idNewUser=getIdOfNewUser(conn);
         } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (NamingException e) {
             e.printStackTrace();
         } finally {
             try {
@@ -61,6 +64,8 @@ public class OracleUserDAO implements UserDAO {
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (NamingException e) {
+            e.printStackTrace();
         } finally {
             try {
                 if(ps!=null) {
@@ -87,6 +92,8 @@ public class OracleUserDAO implements UserDAO {
             ps.setLong(1, user.getUserId());
             ps.executeUpdate();
         } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (NamingException e) {
             e.printStackTrace();
         } finally {
             try {
@@ -125,6 +132,8 @@ public class OracleUserDAO implements UserDAO {
                 user.setPassword(rs.getString("password"));
             }
         } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (NamingException e) {
             e.printStackTrace();
         } finally {
             try {
@@ -170,6 +179,8 @@ public class OracleUserDAO implements UserDAO {
 
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (NamingException e) {
+            e.printStackTrace();
         } finally {
 
             try {
@@ -214,6 +225,8 @@ public class OracleUserDAO implements UserDAO {
             }
 
         } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (NamingException e) {
             e.printStackTrace();
         } finally {
             try {

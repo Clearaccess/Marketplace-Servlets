@@ -3,6 +3,7 @@ package dao.oracleDAO;
 import dao.BidDAO;
 import to.Bid;
 
+import javax.naming.NamingException;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -26,6 +27,8 @@ public class OracleBidDAO implements BidDAO {
             ps.executeUpdate();
             bidId=getIdOfNewBid(conn);
         } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (NamingException e) {
             e.printStackTrace();
         } finally {
             try {
@@ -59,6 +62,8 @@ public class OracleBidDAO implements BidDAO {
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (NamingException e) {
+            e.printStackTrace();
         } finally {
             try {
                 if(ps!=null) {
@@ -85,6 +90,8 @@ public class OracleBidDAO implements BidDAO {
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (NamingException e) {
+            e.printStackTrace();
         } finally {
             try {
                 if(ps!=null) {
@@ -110,6 +117,8 @@ public class OracleBidDAO implements BidDAO {
             ps.setLong(1, id);
             ps.executeUpdate();
         } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (NamingException e) {
             e.printStackTrace();
         } finally {
             try {
@@ -149,6 +158,8 @@ public class OracleBidDAO implements BidDAO {
 
 
         } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (NamingException e) {
             e.printStackTrace();
         } finally {
             try {
@@ -191,6 +202,8 @@ public class OracleBidDAO implements BidDAO {
                 listBids.add(bid);
             }
         } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (NamingException e) {
             e.printStackTrace();
         } finally {
             try {
@@ -235,6 +248,8 @@ public class OracleBidDAO implements BidDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (NamingException e) {
+            e.printStackTrace();
         } finally {
             try {
                 if(rs!=null) {
@@ -277,6 +292,8 @@ public class OracleBidDAO implements BidDAO {
                 bid.setBid(rs.getDouble("bid"));
             }
         } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (NamingException e) {
             e.printStackTrace();
         } finally {
             try {
