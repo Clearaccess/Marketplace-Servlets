@@ -21,21 +21,18 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-offset-1 col-sm-11">
-                    <form class="form-inline">
+                    <form class="form-inline" method="GET" action="search">
                         <h3 class="form-signin-heading">Search parameters</h3>
                         <h5 class="form-signin-heading">Keyword:</h5>
                         <div class="form-group">
                             <label class="sr-only" for="inputKeyWord">Key word</label>
-                            <input type="text" class="form-control" id="inputKeyWord" placeholder="Key word">
+                            <input name="keyWord" type="text" class="form-control" id="inputKeyWord" placeholder="Key word">
                         </div>
-                        <select class="form-control">
-                        <option>Category</option>
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
-                    </select>
+                        <select name="field" class="form-control">
+                            <option value="1">UID</option>
+                            <option value="2">Title</option>
+                            <option value="3">Description</option>
+                        </select>
                         <button type="submit" class="btn btn-primary">Search</button>
                     </form>
                 </div>

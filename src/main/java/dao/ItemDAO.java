@@ -13,7 +13,7 @@ public interface ItemDAO {
     void update(Item item);
     void delete(Item item);
     Item getById(long id);
-    ArrayList<Item> getItemsBySubstr(String substr);
+    ArrayList<Item> getItemsBySubstr(int field, String substr);
     ArrayList<Item> getItemsBySellerId(long userId);
     ArrayList<Item> getAll();
 }

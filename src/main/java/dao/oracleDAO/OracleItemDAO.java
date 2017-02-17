@@ -153,7 +153,10 @@ public class OracleItemDAO implements ItemDAO {
         return item;
     }
 
-    public ArrayList<Item> getItemsBySubstr(String substr){
+    // 1 - UID
+    // 2 - Title
+    // 3 - Description
+    public ArrayList<Item> getItemsBySubstr(int field, String substr){
 
         ArrayList<Item>listItems=new ArrayList<Item>();
         Connection conn = null;
@@ -162,7 +165,7 @@ public class OracleItemDAO implements ItemDAO {
 
         try {
             conn = OracleDAOFactory.createConnection();
-            String sql = "SELECT * FROM Items WHERE title LIKE ?";
+            String sql = "SELECT * FROM Items WHERE " + defRow(field)+ " LIKE ?";
             ps = conn.prepareStatement(sql);
             ps.setString(1, "%"+substr+"%");
             rs=ps.executeQuery();
@@ -315,5 +318,13 @@ public class OracleItemDAO implements ItemDAO {
         rs.next();
         long item_id=rs.getLong(1);
         return item_id;
+    }
+
+    private String defRow(int value){
+        switch (value){
+            case 1: return "item_Id";
+            case 2: return "title";
+            default: return "description";
+        }
     }
 }

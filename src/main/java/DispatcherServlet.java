@@ -16,7 +16,7 @@ import java.util.ArrayList;
 /**
  * Created by Aleksandr_Vaniukov on 2/2/2017.
  */
-@WebServlet(name="DispatcherServlet", urlPatterns = {"/welcome","/login","/logout","/registration", "/editItem", "/showItems", "/showMyItems", "/register", "/edit", "/makeBid", "/buyItem"})
+@WebServlet(name="DispatcherServlet", urlPatterns = {"/welcome","/login","/logout","/registration", "/editItem", "/showItems", "/showMyItems", "/register", "/edit", "/makeBid", "/buyItem", "/search"})
 public class DispatcherServlet extends HttpServlet {
 
     private MainController mainController;
@@ -58,6 +58,15 @@ public class DispatcherServlet extends HttpServlet {
         } else if (requestURL.equals("/showMyItems")) {
 
             req.getRequestDispatcher("WEB-INF/jsp/showMyItems.jsp").forward(req, resp);
+
+        } else if(requestURL.equals("/search")) {
+
+            System.out.println(req.getParameterMap());
+            System.out.println(req.getParameter("keyWord"));
+            System.out.println(req.getParameter("field"));
+            ArrayList<ViewItem>items=mainController.getViewItemsBySubstr(req);
+            req.setAttribute("items", items);
+            req.getRequestDispatcher("WEB-INF/jsp/showItems.jsp").forward(req, resp);
 
         } else {
 

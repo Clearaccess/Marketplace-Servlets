@@ -57,6 +57,27 @@ public class MainController {
         return viewItems;
     }
 
+    public ArrayList<ViewItem> getViewItemsBySubstr(HttpServletRequest request){
+
+        int field=Integer.parseInt(request.getParameter("field"));
+        String keyWord=request.getParameter("keyWord");
+        ArrayList<ViewItem> viewItems=new ArrayList<ViewItem>();
+        ArrayList<Item> items=itemDAO.getItemsBySubstr(field, keyWord);
+
+        for(Item item: items) {
+            User seller = userDAO.getById(item.getSellerId());
+            Bid bestBid = bidDAO.getBestBidByItemId(item.getItemId());
+            User bidder = userDAO.getById(bestBid.getBidderId());
+            ViewItem temp = new ViewItem(item, seller, bidder, bestBid);
+            if(!isSellItem(temp)) {
+                viewItems.add(temp);
+            }
+        }
+
+
+        return viewItems;
+    }
+
     public boolean isLogin(HttpServletRequest request){
         String login=request.getParameter("login").toLowerCase();
         return userDAO.getByLogin(login)!=null;
